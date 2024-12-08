@@ -7,6 +7,7 @@ class UserProfile:
         self.occupation=occupation
         self.astrological_sign=astrological_sign
         self.status=status
+        self.friends = []
 
     def get_name(self):
         return self.name
@@ -30,13 +31,27 @@ class UserProfile:
         self.status=status
 
     def get_friends(self):
-        pass
+        return self.friends
 
     def add_friend(self, friend_profile):
-        pass
+        if friend_profile not in self.friends:
+            self.friends.append(friend_profile)
+        else:
+            print("This user is already your friend")
 
     def remove_friend(self,friend_profile):
-        pass
-
+        if friend_profile in self.friends:
+            self.friends.remove(friend_profile)
+        else:
+            print("This user is not your friend, can not be removed")
+    
+    
     def print_details(self):
-        pass
+        print(f"Name: {self.name}")
+        print(f"Location: {self.location}")
+        print(f"Relationship Status: {self.relationship_status}")
+        print(f"Age: {self.age}")
+        print(f"Occupation: {self.occupation}")
+        print(f"Astrological Sign: {self.astrological_sign}")
+        print(f"Status: {self.status}")
+        print(f"Friends: {[friend.name for friend in self.friends]}")
