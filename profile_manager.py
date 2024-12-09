@@ -124,7 +124,10 @@ class ProfileManager:
 
         # Get friends of friends
         for friend in direct_friends:
-            friends_of_friends.update(friend.get_connections())
+            friend_vertex=self.graph.get_vertex(friend)
+            if friend_vertex:
+                fof_connections = friend_vertex.get_connections()
+                friends_of_friends.update(fof_connections)
 
         # Exclude the original user and direct friends
         friends_of_friends.discard(name)
@@ -137,6 +140,8 @@ class ProfileManager:
         try:
             with open(file_path, "r") as csv_file:
                 reader = csv.DictReader(csv_file)
+                
+                # First, add all profiles to the graph
                 for row in reader:
                     self.add_profile(
                         name=row["name"],
@@ -148,12 +153,17 @@ class ProfileManager:
                         status=row.get("status", "")
                     )
 
-                    # Connect friends if specified
+                # Reset file pointer to re-read for connections
+                csv_file.seek(0)
+                next(reader)  # Skip the header row
+
+                # Then, add connections
+                for row in reader:
                     if "friends" in row and row["friends"]:
-                        for friend in row["friends"].split(";"):
+                        for friend in row["friends"].split("|"):  # Use "|" as delimiter
                             self.connect_profile(row["name"], friend.strip())
 
-            print("Profiles loaded successfully from CSV.")
+                print("Profiles loaded successfully from CSV.")
         except Exception as e:
             print(f"Error reading profiles from CSV: {e}")
 

@@ -1,0 +1,8 @@
+graph {
+	Alice -- Bob
+	Alice -- Charlie
+	Bob -- Alice
+	Bob -- Dana
+	Charlie -- Alice
+	Charlie -- Eve
+}

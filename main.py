@@ -5,6 +5,7 @@ from user_profile import *
 
 def main():
     manager = ProfileManager()
+    
     while True:
         print("\nMenu:")
         print("1. Add Profile")
