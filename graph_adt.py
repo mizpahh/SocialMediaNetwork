@@ -1,3 +1,4 @@
+# hai:
 from linked_adts import *
 
 class Vertex:
@@ -57,8 +58,6 @@ class Undirected_graph:
             from_vertex.add_neighbor(to_key, weight)
             to_vertex.add_neighbor(from_key, weight)
             self.edge_count+=1
-
-
 
     def get_vertices(self):
         return self.vertices.get_keys()
