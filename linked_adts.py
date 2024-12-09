@@ -1,3 +1,4 @@
+# code provided:
 class LinkedDictionary:
     # Simple dictionary implementation
     def __init__(self):
