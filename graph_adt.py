@@ -18,7 +18,7 @@ class Vertex:
 
 
             
-    def get_connection(self):
+    def get_connections(self):
         """Return all neighbors (keys in LinkedDictionary)."""
         return self.neighbor.get_keys()
 
@@ -45,6 +45,17 @@ class Undirected_graph:
             # Create a new Vertex object and add it to the vertices dictionary
             new_vertex = Vertex(key)
             self.vertices.add(key, new_vertex)
+    def remove_vertex(self, key):
+        """Remove a vertex and all edges connected to it."""
+        if not self.vertices.get_value(key):
+            return
+
+        # Remove the vertex from its neighbors
+        for neighbor in self.get_vertex(key).get_connection():
+            self.get_vertex(neighbor).remove_neighbor(key)
+
+        # Remove the vertex itself
+        self.vertices.remove(key)
 
 
     def get_vertex(self,key):
@@ -54,7 +65,7 @@ class Undirected_graph:
         
         from_vertex=self.get_vertex(from_key)
         to_vertex=self.get_vertex(to_key)
-        if(from_vertex and to_vertex):
+        if from_vertex and to_vertex :
             from_vertex.add_neighbor(to_key, weight)
             to_vertex.add_neighbor(from_key, weight)
             self.edge_count+=1
